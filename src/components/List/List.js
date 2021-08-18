@@ -11,11 +11,11 @@ import {
 import useStyles from "./style";
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
-const List = () => {
+const List = ({ places = [] }) => {
   const classes = useStyles();
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState(0);
-  const places = [{ name: "Cool place" }, { name: "xd" }];
+
   return (
     <div className={classes.container}>
       <Typography variant="h4">

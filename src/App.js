@@ -8,9 +8,9 @@ import { getPlacesData } from "./api";
 import React, { useEffect, useState } from "react";
 
 const App = () => {
-  const [places, setPlaces] = useState([]);
+  const [places, setPlaces] = useState(null);
   const [coordinates, setCoordinates] = useState({});
-  const [bounds, setBounds] = useState(null);
+  const [bounds, setBounds] = useState({});
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -21,9 +21,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log(coordinates, bounds);
-    getPlacesData().then((data) => {
-      console.log(data);
+    getPlacesData(bounds.sw, bounds.ne).then((data) => {
       setPlaces(data);
     });
   }, [coordinates, bounds]);
@@ -33,7 +31,7 @@ const App = () => {
       <Header />
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
-          <List />
+          <List places={places} />
         </Grid>
         <Grid item xs={12} md={8}>
           <Map
@@ -43,8 +41,6 @@ const App = () => {
           />
         </Grid>
       </Grid>
-
-      <PlaceDetails />
     </>
   );
 };
